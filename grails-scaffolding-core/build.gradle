@@ -1,0 +1,14 @@
+
+dependencies {
+    compile "org.grails:grails-core:$grailsVersion"
+    compile "org.grails:grails-datastore-core:$gormVersion"
+    compile "org.grails:grails-datastore-gorm-validation:$gormVersion"
+    compile "org.grails:grails-web-url-mappings:$grailsVersion"
+    compile 'javax.annotation:javax.annotation-api:1.3.2'
+    
+    testCompile "org.hibernate:hibernate-core:$hibernateCoreVersion"
+    testCompile "org.grails:grails-datastore-gorm-hibernate5:$gormVersion"
+    testCompile "org.spockframework:spock-core:$spockVersion"
+    // testCompile 'net.bytebuddy:byte-buddy:1.9.4'
+    // testCompile 'org.objenesis:objenesis:3.0.1'
+}
