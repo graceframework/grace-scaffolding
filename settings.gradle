@@ -1,1 +1,5 @@
 rootProject.name='scaffolding'
+
+include 'grails-scaffolding-core'
+include 'grails-plugin-scaffolding'
+// include 'docs'

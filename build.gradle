@@ -1,56 +1,60 @@
 buildscript {
     repositories {
+        mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath "org.grails:grails-docs:$grailsVersion"
     }
 }
-
-version project.projectVersion
-group "org.grails.plugins"
 
 repositories {
-  maven { url "https://repo.grails.org/grails/core" }
+    mavenLocal()
+    maven { url "https://repo.grails.org/grails/core" }
+}
+version project.projectVersion
+
+ext {
+    commonBuild = 'https://raw.githubusercontent.com/grails/grails-common-build/master'
 }
 
-apply plugin: 'java-library'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: "org.grails.grails-plugin"
-apply plugin: "org.grails.grails-gsp"
-apply plugin: "org.grails.internal.grails-plugin-publish"
+subprojects {
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+    version project.projectVersion
 
-dependencyManagement {
-    imports {
-        mavenBom "org.grails:grails-bom:$grailsVersion"
+    ext {
+        userOrg = "grails"
+        isGrailsPlugin = name.startsWith('grails-plugin')
+        isBuildSnapshot = version.toString().endsWith("-SNAPSHOT")
     }
-    applyMavenExclusions false
-}
 
-dependencies {
-  api "org.grails:grails-dependencies"
-  api "org.grails:grails-web-boot"
-  api 'javax.servlet:javax.servlet-api'
-
-
-  api "org.grails.plugins:fields:$fieldsVersion"
-  testImplementation "org.grails:grails-plugin-testing"
-
-  console "org.grails:grails-console"
-}
-
-
-grailsPublish {
-    userOrg = "grails"
-    githubSlug = 'grails3-plugins/grails-scaffolding'
-    license {
-        name = 'Apache-2.0'
+    if(isGrailsPlugin) {
+        group "org.grails.plugins"
     }
-    title = "Grails Scaffolding Plugin"
-    desc = "Provides scaffolding for Grails applications"
-    developers = [graemerocher: "Graeme Rocher", puneetbehl: "Puneet Behl"]
+    else {
+        group "org.grails"
+    }
+
+    repositories {
+        mavenLocal()
+        maven { url "https://repo.grails.org/grails/core" }
+    }
+
+    if(it.projectDir.path.endsWith("examples/${it.name}".toString())) {
+        apply plugin:"org.grails.grails-web"
+    }
+    else if(isGrailsPlugin) {
+        apply from:"${commonBuild}/common-plugin.gradle"
+    }
+    else {
+        apply from:"${commonBuild}/common-project.gradle"
+    }
+
+    dependencies {
+        compile 'javax.annotation:javax.annotation-api:1.3.2'
+    }
 }
+
+apply from:"${commonBuild}/common-publishing.gradle"
+apply from:"${commonBuild}/common-docs.gradle"
