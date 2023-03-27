@@ -4,7 +4,7 @@ buildscript {
         maven { url "https://repo.grails.org/grails/core" }
     }
     dependencies {
-        classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
         classpath "org.grails:grails-docs:$grailsVersion"
     }
 }
@@ -16,7 +16,7 @@ repositories {
 version project.projectVersion
 
 ext {
-    commonBuild = 'https://raw.githubusercontent.com/grails/grails-common-build/master'
+    commonBuild = 'https://raw.githubusercontent.com/rainboyan/grails-common-build/master'
 }
 
 subprojects {
