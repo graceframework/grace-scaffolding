@@ -3,7 +3,6 @@ package org.grails.scaffolding.model.property
 import groovy.transform.CompileStatic
 import org.grails.datastore.mapping.model.MappingContext
 import org.grails.datastore.mapping.model.PersistentProperty
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 
 /**
@@ -19,23 +18,28 @@ class DomainPropertyFactoryImpl implements DomainPropertyFactory {
     @Value('${grails.databinding.trimStrings:true}')
     Boolean trimStrings
 
-    @Autowired
-    MappingContext grailsDomainClassMappingContext
+    private MappingContext grailsDomainClassMappingContext
 
+    DomainPropertyFactoryImpl(MappingContext grailsDomainClassMappingContext) {
+        this.grailsDomainClassMappingContext = grailsDomainClassMappingContext
+    }
+
+    @Override
     DomainProperty build(PersistentProperty persistentProperty) {
-        DomainPropertyImpl domainProperty = new DomainPropertyImpl(persistentProperty, grailsDomainClassMappingContext)
+        DomainPropertyImpl domainProperty = new DomainPropertyImpl(persistentProperty, this.grailsDomainClassMappingContext)
         init(domainProperty)
         domainProperty
     }
 
+    @Override
     DomainProperty build(PersistentProperty rootProperty, PersistentProperty persistentProperty) {
-        DomainPropertyImpl domainProperty = new DomainPropertyImpl(rootProperty, persistentProperty, grailsDomainClassMappingContext)
+        DomainPropertyImpl domainProperty = new DomainPropertyImpl(rootProperty, persistentProperty, this.grailsDomainClassMappingContext)
         init(domainProperty)
         domainProperty
     }
 
     private init(DomainPropertyImpl domainProperty) {
-        domainProperty.convertEmptyStringsToNull = convertEmptyStringsToNull
-        domainProperty.trimStrings = trimStrings
+        domainProperty.convertEmptyStringsToNull = this.convertEmptyStringsToNull
+        domainProperty.trimStrings = this.trimStrings
     }
 }

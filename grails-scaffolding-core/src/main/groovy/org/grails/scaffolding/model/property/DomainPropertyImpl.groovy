@@ -1,8 +1,10 @@
 package org.grails.scaffolding.model.property
 
+import groovy.transform.CompileStatic
+import org.springframework.validation.Validator
+
 import grails.gorm.validation.PersistentEntityValidator
 import grails.util.GrailsNameUtils
-import groovy.transform.CompileStatic
 
 import org.grails.datastore.mapping.config.Property
 import org.grails.datastore.mapping.model.MappingContext
@@ -10,7 +12,7 @@ import org.grails.datastore.mapping.model.PersistentEntity
 import org.grails.datastore.mapping.model.PersistentProperty
 import org.grails.datastore.mapping.model.types.Association
 import org.grails.datastore.mapping.model.types.Basic
-import org.springframework.validation.Validator
+
 import static grails.gorm.validation.ConstrainedProperty.BLANK_CONSTRAINT
 
 /**
@@ -20,7 +22,8 @@ import static grails.gorm.validation.ConstrainedProperty.BLANK_CONSTRAINT
 @CompileStatic
 class DomainPropertyImpl implements DomainProperty {
 
-    @Delegate PersistentProperty<Property> persistentProperty
+    @Delegate
+    PersistentProperty<Property> persistentProperty
     PersistentProperty rootProperty
     PersistentEntity domainClass
     Constrained constrained
@@ -34,7 +37,7 @@ class DomainPropertyImpl implements DomainProperty {
         this.domainClass = persistentProperty.owner
         Validator validator = mappingContext.getEntityValidator(domainClass)
         if (validator instanceof PersistentEntityValidator) {
-            this.constrained = new Constrained(((PersistentEntityValidator)validator).constrainedProperties.get(name))
+            this.constrained = new Constrained(((PersistentEntityValidator) validator).constrainedProperties.get(name))
         }
         if (this.constrained?.isNull()) {
             this.constrained = null
@@ -48,49 +51,60 @@ class DomainPropertyImpl implements DomainProperty {
         this.setRootProperty(rootProperty)
     }
 
+    @Override
     void setRootProperty(PersistentProperty rootProperty) {
         this.rootProperty = rootProperty
         this.pathFromRoot = "${rootProperty.name}.${name}"
     }
 
+    @Override
     Class getRootBeanType() {
         (rootProperty ?: persistentProperty).owner.javaClass
     }
 
+    @Override
     Class getBeanType() {
         owner.javaClass
     }
 
+    @Override
     Class getAssociatedType() {
         if (persistentProperty instanceof Association) {
             if (persistentProperty instanceof Basic) {
-                ((Basic)persistentProperty).componentType
-            } else {
+                ((Basic) persistentProperty).componentType
+            }
+            else {
                 associatedEntity.javaClass
             }
-        } else {
+        }
+        else {
             null
         }
     }
 
+    @Override
     PersistentEntity getAssociatedEntity() {
-        ((Association)persistentProperty).associatedEntity
+        ((Association) persistentProperty).associatedEntity
     }
 
+    @Override
     boolean isRequired() {
         if (type in [Boolean, boolean]) {
             false
-        } else if (type == String) {
+        }
+        else if (type == String) {
             // if the property prohibits nulls and blanks are converted to nulls, then blanks will be prohibited even if a blank
             // constraint does not exist
             boolean hasBlankConstraint = constrained?.hasAppliedConstraint(BLANK_CONSTRAINT)
             boolean blanksImplicityProhibited = !hasBlankConstraint && !constrained?.nullable && convertEmptyStringsToNull && trimStrings
             !constrained?.nullable && (!constrained?.blank || blanksImplicityProhibited)
-        } else {
+        }
+        else {
             !constrained?.nullable
         }
     }
 
+    @Override
     List<String> getLabelKeys() {
         List<String> labelKeys = new ArrayList<>()
         labelKeys.add("${GrailsNameUtils.getPropertyName(beanType.simpleName)}.${name}.label".toString())
@@ -100,6 +114,7 @@ class DomainPropertyImpl implements DomainProperty {
         labelKeys.unique()
     }
 
+    @Override
     String getDefaultLabel() {
         GrailsNameUtils.getNaturalName(name)
     }
@@ -115,8 +130,8 @@ class DomainPropertyImpl implements DomainProperty {
 
         Constrained cp2 = o2.constrained
 
-        if (constrained == null  && cp2 == null) {
-            return name.compareTo(o2.name)
+        if (constrained == null && cp2 == null) {
+            return getName() <=> o2.name
         }
 
         if (constrained == null) {

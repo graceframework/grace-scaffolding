@@ -1,17 +1,18 @@
 package org.grails.scaffolding.model
 
-import org.grails.datastore.mapping.config.Property
-import org.grails.scaffolding.model.property.Constrained
-import org.grails.scaffolding.model.property.DomainProperty
-import org.grails.scaffolding.model.property.DomainPropertyFactory
-import grails.util.GrailsClassUtils
+import java.lang.reflect.Method
+
 import groovy.transform.CompileStatic
+
+import grails.util.GrailsClassUtils
+
+import org.grails.datastore.mapping.config.Property
 import org.grails.datastore.mapping.model.PersistentEntity
 import org.grails.datastore.mapping.model.PersistentProperty
 import org.grails.datastore.mapping.model.types.Embedded
-import org.springframework.beans.factory.annotation.Autowired
-
-import java.lang.reflect.Method
+import org.grails.scaffolding.model.property.Constrained
+import org.grails.scaffolding.model.property.DomainProperty
+import org.grails.scaffolding.model.property.DomainPropertyFactory
 
 /**
  * @see {@link DomainModelService}
@@ -20,17 +21,21 @@ import java.lang.reflect.Method
 @CompileStatic
 class DomainModelServiceImpl implements DomainModelService {
 
-    @Autowired
-    DomainPropertyFactory domainPropertyFactory
+    private DomainPropertyFactory domainPropertyFactory
 
     private static Method derivedMethod
 
     static {
         try {
             derivedMethod = Property.class.getMethod("isDerived", (Class<?>[]) null)
-        } catch (NoSuchMethodException | SecurityException e) {
+        }
+        catch (NoSuchMethodException | SecurityException e) {
             // no-op
         }
+    }
+
+    DomainModelServiceImpl(DomainPropertyFactory domainPropertyFactory) {
+        this.domainPropertyFactory = domainPropertyFactory
     }
 
     /**
@@ -50,12 +55,13 @@ class DomainModelServiceImpl implements DomainModelService {
         }
         Object scaffoldProp = GrailsClassUtils.getStaticPropertyValue(domainClass.javaClass, 'scaffold')
         if (scaffoldProp instanceof Map) {
-            Map scaffold = (Map)scaffoldProp
+            Map scaffold = (Map) scaffoldProp
             if (scaffold.containsKey('exclude')) {
                 if (scaffold.exclude instanceof Collection) {
-                    blacklist.addAll((Collection)scaffold.exclude)
-                } else if (scaffold.exclude instanceof String) {
-                    blacklist.add((String)scaffold.exclude)
+                    blacklist.addAll((Collection) scaffold.exclude)
+                }
+                else if (scaffold.exclude instanceof String) {
+                    blacklist.add((String) scaffold.exclude)
                 }
             }
         }
@@ -132,13 +138,14 @@ class DomainModelServiceImpl implements DomainModelService {
         getInputProperties(domainClass).each { DomainProperty domainProperty ->
             PersistentProperty property = domainProperty.persistentProperty
             if (property instanceof Embedded) {
-                getInputProperties(((Embedded)property).associatedEntity).each { DomainProperty embedded ->
+                getInputProperties(((Embedded) property).associatedEntity).each { DomainProperty embedded ->
                     embedded.rootProperty = domainProperty
                     if (closure.call(embedded)) {
                         properties.add(embedded)
                     }
                 }
-            } else {
+            }
+            else {
                 if (closure.call(domainProperty)) {
                     properties.add(domainProperty)
                 }

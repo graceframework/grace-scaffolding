@@ -1,9 +1,14 @@
 package org.grails.scaffolding;
 
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 
+import grails.web.mapping.LinkGenerator;
+
+import org.grails.datastore.mapping.model.MappingContext;
 import org.grails.scaffolding.markup.ContextMarkupRenderer;
 import org.grails.scaffolding.markup.ContextMarkupRendererImpl;
 import org.grails.scaffolding.markup.DomainMarkupRenderer;
@@ -23,32 +28,34 @@ public class ScaffoldingBeanConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ContextMarkupRenderer contextMarkupRenderer() {
-        return new ContextMarkupRendererImpl();
+    public ContextMarkupRenderer contextMarkupRenderer(ObjectProvider<MessageSource> messageSources) {
+        return new ContextMarkupRendererImpl(messageSources.getIfAvailable());
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public DomainMarkupRenderer domainMarkupRenderer() {
-        return new DomainMarkupRendererImpl();
+    public DomainMarkupRenderer domainMarkupRenderer(DomainModelService domainModelService, PropertyMarkupRenderer propertyMarkupRenderer,
+            ContextMarkupRenderer contextMarkupRenderer) {
+        return new DomainMarkupRendererImpl(domainModelService, propertyMarkupRenderer, contextMarkupRenderer);
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public PropertyMarkupRenderer propertyMarkupRenderer() {
-        return new PropertyMarkupRendererImpl();
+    public PropertyMarkupRenderer propertyMarkupRenderer(DomainInputRendererRegistry domainInputRendererRegistry,
+            DomainOutputRendererRegistry domainOutputRendererRegistry) {
+        return new PropertyMarkupRendererImpl(domainInputRendererRegistry, domainOutputRendererRegistry);
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public DomainPropertyFactory domainPropertyFactory() {
-        return new DomainPropertyFactoryImpl();
+    public DomainPropertyFactory domainPropertyFactory(ObjectProvider<MappingContext> grailsDomainClassMappingContext) {
+        return new DomainPropertyFactoryImpl(grailsDomainClassMappingContext.getIfAvailable());
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public DomainModelService domainModelService() {
-        return new DomainModelServiceImpl();
+    public DomainModelService domainModelService(DomainPropertyFactory domainPropertyFactory) {
+        return new DomainModelServiceImpl(domainPropertyFactory);
     }
 
     @Bean
@@ -65,8 +72,9 @@ public class ScaffoldingBeanConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public DomainRendererRegisterer domainRendererRegisterer() {
-        return new DomainRendererRegisterer();
+    public DomainRendererRegisterer domainRendererRegisterer(DomainInputRendererRegistry domainInputRendererRegistry, DomainOutputRendererRegistry domainOutputRendererRegistry,
+            ObjectProvider<LinkGenerator> grailsLinkGenerator) {
+        return new DomainRendererRegisterer(domainInputRendererRegistry, domainOutputRendererRegistry, grailsLinkGenerator.getIfAvailable());
     }
 
 }
