@@ -19,7 +19,7 @@ repositories {
 version project.projectVersion
 
 ext {
-    commonBuild = 'https://raw.githubusercontent.com/rainboyan/grails-common-build/22.0.x'
+    commonBuild = 'http://localhost:9000'
 }
 
 subprojects {
@@ -47,10 +47,10 @@ subprojects {
         apply plugin:"org.grails.grails-web"
     }
     else if (isGrailsPlugin) {
-        apply from: "${commonBuild}/common-plugin.gradle"
+        apply from: resources.text.fromInsecureUri("${commonBuild}/common-plugin.gradle")
     }
     else {
-        apply from: "${commonBuild}/common-project.gradle"
+        apply from: resources.text.fromInsecureUri("${commonBuild}/common-project.gradle")
     }
 
     dependencies {
@@ -58,5 +58,5 @@ subprojects {
     }
 }
 
-apply from: "${commonBuild}/common-publishing.gradle"
-apply from: "${commonBuild}/common-docs.gradle"
+apply from: resources.text.fromInsecureUri("${commonBuild}/common-publishing.gradle")
+apply from: resources.text.fromInsecureUri("${commonBuild}/common-docs.gradle")

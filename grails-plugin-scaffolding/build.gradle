@@ -1,5 +1,4 @@
 dependencies {
-    compileOnly "org.grails:grails-boot:$grailsVersion"
     api "org.grails:grails-core:$grailsVersion"
     api "org.grails:grails-plugin-rest:$grailsVersion"
     api "org.grails:grails-web-boot:$grailsVersion"
