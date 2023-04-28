@@ -1,10 +1,10 @@
 package org.grails.scaffolding.markup
 
-import org.grails.scaffolding.model.property.DomainProperty
-import org.grails.scaffolding.registry.DomainOutputRendererRegistry
-import org.grails.scaffolding.registry.DomainInputRendererRegistry
 import groovy.transform.CompileStatic
-import org.springframework.beans.factory.annotation.Autowired
+
+import org.grails.scaffolding.model.property.DomainProperty
+import org.grails.scaffolding.registry.DomainInputRendererRegistry
+import org.grails.scaffolding.registry.DomainOutputRendererRegistry
 
 /**
  * @see {@link PropertyMarkupRenderer}
@@ -13,24 +13,27 @@ import org.springframework.beans.factory.annotation.Autowired
 @CompileStatic
 class PropertyMarkupRendererImpl implements PropertyMarkupRenderer {
 
-    @Autowired
-    DomainInputRendererRegistry domainInputRendererRegistry
+    private DomainInputRendererRegistry domainInputRendererRegistry
 
-    @Autowired
-    DomainOutputRendererRegistry domainOutputRendererRegistry
+    private DomainOutputRendererRegistry domainOutputRendererRegistry
+
+    PropertyMarkupRendererImpl(DomainInputRendererRegistry domainInputRendererRegistry, DomainOutputRendererRegistry domainOutputRendererRegistry) {
+        this.domainInputRendererRegistry = domainInputRendererRegistry
+        this.domainOutputRendererRegistry = domainOutputRendererRegistry
+    }
 
     @Override
     Closure renderListOutput(DomainProperty property) {
-        domainOutputRendererRegistry.get(property).renderListOutput(property)
+        this.domainOutputRendererRegistry.get(property).renderListOutput(property)
     }
 
     @Override
     Closure renderOutput(DomainProperty property) {
-        domainOutputRendererRegistry.get(property).renderOutput(property)
+        this.domainOutputRendererRegistry.get(property).renderOutput(property)
     }
 
     @Override
     Closure renderInput(DomainProperty property) {
-        domainInputRendererRegistry.get(property).renderInput(getStandardAttributes(property), property)
+        this.domainInputRendererRegistry.get(property).renderInput(getStandardAttributes(property), property)
     }
 }

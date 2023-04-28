@@ -6,16 +6,17 @@ import groovy.transform.CompileStatic
 import org.grails.datastore.mapping.model.PersistentEntity
 import org.springframework.context.MessageSource
 
-import jakarta.annotation.Resource
-
 /**
  * @see {@link ContextMarkupRenderer}
  * @author James Kleeh
  */
 class ContextMarkupRendererImpl implements ContextMarkupRenderer {
 
-    @Resource
-    MessageSource messageSource
+    private MessageSource messageSource
+
+    ContextMarkupRendererImpl(MessageSource messageSource) {
+        this.messageSource = messageSource
+    }
 
     @CompileStatic
     protected String getDefaultTableHeader(DomainProperty property) {
@@ -37,7 +38,7 @@ class ContextMarkupRendererImpl implements ContextMarkupRenderer {
     @CompileStatic
     protected String resolveMessage(List<String> keysInPreferenceOrder, String defaultMessage) {
         def message = keysInPreferenceOrder.findResult { key ->
-            messageSource.getMessage(key, [].toArray(), defaultMessage, Locale.default) ?: null
+            this.messageSource.getMessage(key, [].toArray(), defaultMessage, Locale.default) ?: null
         }
         message ?: defaultMessage
     }

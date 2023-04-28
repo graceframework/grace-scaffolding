@@ -63,7 +63,7 @@ class ScaffoldingViewResolver extends GroovyPageViewResolver implements Resource
                     }
 
                     if(!res?.exists()) {
-                        def url = IOUtils.findResourceRelativeToClass(controllerClass.clazz, "/META-INF/templates/scaffolding/${shortViewName}.gsp")
+                        def url = IOUtils.findResourceRelativeToClass(controllerClass.clazz, "/templates/scaffolding/${shortViewName}.gsp")
                         res = url ? new UrlResource(url) : null
                     }
 

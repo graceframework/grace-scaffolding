@@ -1,12 +1,11 @@
 buildscript {
     repositories {
         mavenLocal()
-        mavenCentral()
         maven { url "https://repo.grails.org/grails/core" }
         maven { url 'https://repo.gradle.org/gradle/libs-releases' }
     }
     dependencies {
-        classpath "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
+        classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "org.grails:grails-docs:$grailsVersion"
     }
 }
@@ -16,6 +15,7 @@ repositories {
     mavenCentral()
     maven { url "https://repo.grails.org/grails/core" }
 }
+
 version project.projectVersion
 
 ext {
@@ -23,7 +23,6 @@ ext {
 }
 
 subprojects {
-
     version project.projectVersion
 
     ext {
@@ -32,7 +31,7 @@ subprojects {
         isBuildSnapshot = version.toString().endsWith("-SNAPSHOT")
     }
 
-    if(isGrailsPlugin) {
+    if (isGrailsPlugin) {
         group "org.grails.plugins"
     }
     else {
@@ -44,14 +43,14 @@ subprojects {
         maven { url "https://repo.grails.org/grails/core" }
     }
 
-    if(it.projectDir.path.endsWith("examples/${it.name}".toString())) {
+    if (it.projectDir.path.endsWith("examples/${it.name}".toString())) {
         apply plugin:"org.grails.grails-web"
     }
-    else if(isGrailsPlugin) {
-        apply from:"${commonBuild}/common-plugin.gradle"
+    else if (isGrailsPlugin) {
+        apply from: resources.text.fromInsecureUri("${commonBuild}/common-plugin.gradle")
     }
     else {
-        apply from:"${commonBuild}/common-project.gradle"
+        apply from: resources.text.fromInsecureUri("${commonBuild}/common-project.gradle")
     }
 
     dependencies {
@@ -59,5 +58,5 @@ subprojects {
     }
 }
 
-apply from:"${commonBuild}/common-publishing.gradle"
-apply from:"${commonBuild}/common-docs.gradle"
+apply from: resources.text.fromInsecureUri("${commonBuild}/common-publishing.gradle")
+apply from: resources.text.fromInsecureUri("${commonBuild}/common-docs.gradle")

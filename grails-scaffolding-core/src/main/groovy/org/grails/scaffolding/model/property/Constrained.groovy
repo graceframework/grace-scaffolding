@@ -1,6 +1,8 @@
 package org.grails.scaffolding.model.property
 
+import groovy.transform.CompileStatic
 
+@CompileStatic
 class Constrained {
 
     grails.gorm.validation.Constrained constrained1
