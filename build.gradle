@@ -54,7 +54,7 @@ subprojects {
     }
 
     dependencies {
-        implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+        compileOnly "jakarta.annotation:jakarta.annotation-api:$jakartaAnnotationVersion"
     }
 }
 
