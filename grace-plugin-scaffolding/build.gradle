@@ -1,0 +1,9 @@
+dependencies {
+    api "org.graceframework:grace-core:$grailsVersion"
+    api "org.graceframework:grace-plugin-rest:$grailsVersion"
+    api "org.graceframework:grace-web-boot:$grailsVersion"
+    api "org.graceframework:grace-web-gsp:$grailsGspVersion"
+    api "javax.servlet:javax.servlet-api:$servletApiVersion"
+
+    // testImplementation "org.graceframework:grace-plugin-testing:$grailsVersion"
+}
