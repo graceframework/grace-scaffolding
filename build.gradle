@@ -3,10 +3,13 @@ buildscript {
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url 'https://repo.gradle.org/gradle/libs-releases' }
+        if (project.projectVersion.endsWith('-SNAPSHOT')) {
+            maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+        }
     }
     dependencies {
         classpath "io.github.gradle-nexus:publish-plugin:1.3.0"
-        classpath "org.graceframework:grace-gradle-plugin:$grailsVersion"
+        classpath "org.graceframework:grace-gradle-plugin:$graceVersion"
         classpath "org.gradle:test-retry-gradle-plugin:1.4.0"
         classpath "io.spring.gradle:dependency-management-plugin:$springDependencyManagementPluginVersion"
     }
@@ -14,7 +17,6 @@ buildscript {
 
 ext {
     isReleaseVersion = !project.projectVersion.endsWith('-SNAPSHOT')
-    grailsVersion = project.grailsVersion
     userOrg = "graceframework"
 }
 
@@ -70,11 +72,14 @@ subprojects { project->
         // mavenLocal()
         mavenCentral()
         maven { url 'https://repo.gradle.org/gradle/libs-releases' }
+        if (project.projectVersion.endsWith('-SNAPSHOT')) {
+            maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+        }
     }
 
     dependencyManagement {
         imports {
-            mavenBom "org.graceframework:grace-bom:$grailsVersion"
+            mavenBom "org.graceframework:grace-bom:$graceVersion"
         }
         applyMavenExclusions false
     }
