@@ -8,3 +8,9 @@ dependencies {
 
     testImplementation "org.graceframework:grace-plugin-testing:$graceVersion"
 }
+
+jar {
+    enabled = true
+    archiveClassifier.set('')
+    includeEmptyDirs = false
+}
