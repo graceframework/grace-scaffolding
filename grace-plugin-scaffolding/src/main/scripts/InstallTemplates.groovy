@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-description "Installs scaffolding templates that use f:all to render properties", "grails install-templates"
+description "Installs scaffolding templates that use f:all to render properties", "grace install-templates"
 
 updateStatus "Copying scaffolding templates"
 mkdir "src/main/templates/scaffolding"
