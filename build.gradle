@@ -69,8 +69,8 @@ subprojects { project->
         apply plugin: 'org.graceframework.grace-plugin'
     }
 
-    sourceCompatibility = 11
-    targetCompatibility = 11
+    sourceCompatibility = 17
+    targetCompatibility = 17
 
     repositories {
         // mavenLocal()
@@ -97,15 +97,15 @@ subprojects { project->
         }
 
         dependencies {
-            api "org.codehaus.groovy:groovy:$groovyVersion"
+            api "org.apache.groovy:groovy:$groovyVersion"
             api "org.slf4j:slf4j-api:$slf4jVersion"
             documentation "org.fusesource.jansi:jansi:$jansiVersion"
-            documentation "org.codehaus.groovy:groovy-dateutil:$groovyVersion"
+            documentation "org.apache.groovy:groovy-dateutil:$groovyVersion"
             documentation "info.picocli:picocli:$picocliVersion"
             documentation "com.github.javaparser:javaparser-core:$javaParserCoreVersion"
 
             testImplementation "org.spockframework:spock-core:$spockVersion"
-            testImplementation "org.codehaus.groovy:groovy-test-junit5:$groovyVersion"
+            testImplementation "org.apache.groovy:groovy-test-junit5:$groovyVersion"
             testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
             testImplementation "org.junit.platform:junit-platform-runner:$junitJupiterPlatformVersion"
             testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"

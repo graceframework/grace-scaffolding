@@ -1,10 +1,12 @@
 dependencies {
     compileOnly "org.graceframework:grace-boot:$graceVersion"
-    api "org.graceframework:grace-core:$graceVersion"
+    api "org.graceframework:grace-core:$graceVersion", {
+        exclude group: 'org.graceframework', module: 'grace-datastore-core'
+    }
     api "org.graceframework:grace-plugin-rest:$graceVersion"
     api "org.graceframework:grace-web-boot:$graceVersion"
     api "org.graceframework:grace-web-gsp:$graceVersion"
-    compileOnly "javax.servlet:javax.servlet-api:$servletApiVersion"
+    compileOnly "jakarta.servlet:jakarta.servlet-api:$servletApiVersion"
 
     testImplementation "org.graceframework:grace-plugin-testing:$graceVersion"
 }
