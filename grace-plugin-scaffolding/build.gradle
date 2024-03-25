@@ -1,0 +1,16 @@
+dependencies {
+    compileOnly "org.graceframework:grace-boot:$graceVersion"
+    api "org.graceframework:grace-core:$graceVersion"
+    api "org.graceframework:grace-plugin-rest:$graceVersion"
+    api "org.graceframework:grace-web-boot:$graceVersion"
+    api "org.graceframework:grace-web-gsp:$graceVersion"
+    compileOnly "javax.servlet:javax.servlet-api:$servletApiVersion"
+
+    testImplementation "org.graceframework:grace-plugin-testing:$graceVersion"
+}
+
+jar {
+    enabled = true
+    archiveClassifier.set('')
+    includeEmptyDirs = false
+}
