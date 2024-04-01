@@ -1,0 +1,36 @@
+buildscript {
+    repositories {
+        // mavenLocal()
+        mavenCentral()
+        if (!isReleaseVersion) {
+            maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+        }
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://repo.gradle.org/gradle/libs-releases" }
+    }
+    dependencies {
+        classpath "org.graceframework:grace-gradle-plugin:$graceVersion"
+    }
+}
+
+ext {
+    isCiBuild = System.getenv().get("TRAVIS") == 'true' || System.getenv().get("CI") as Boolean
+}
+
+apply plugin:"org.graceframework.grace-plugin"
+
+dependencies {
+    api "org.graceframework:grace-core:$graceVersion"
+    api "org.graceframework:grace-plugin-rest:$graceVersion"
+    compileOnly "org.graceframework:grace-boot:$graceVersion"
+    api "org.graceframework:grace-web-gsp:$graceGspVersion"
+    compileOnly "javax.servlet:javax.servlet-api:$servletApiVersion"
+
+    // testImplementation "org.graceframework:grace-plugin-testing:$graceVersion"
+}
+
+jar {
+    enabled = true
+    archiveClassifier.set('')
+    includeEmptyDirs = false
+}

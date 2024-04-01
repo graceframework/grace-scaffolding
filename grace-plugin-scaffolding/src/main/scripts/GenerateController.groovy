@@ -1,7 +1,7 @@
 import org.grails.cli.interactive.completers.DomainClassCompleter
 
 description( "Generates a controller that performs CRUD operations" ) {
-  usage "grails generate-controller [DOMAIN CLASS]"
+  usage "grace generate-controller [DOMAIN CLASS]"
   completer DomainClassCompleter
   flag name:'force', description:"Whether to overwrite existing files"
 }
@@ -10,7 +10,7 @@ description( "Generates a controller that performs CRUD operations" ) {
 if(args) {
   def classNames = args
   if(args[0] == '*') {
-    classNames = resources("file:grails-app/domain/**/*.groovy")
+    classNames = resources("file:app/domain/**/*.groovy")
                     .collect { className(it) }
   }
   for(arg in classNames) {
@@ -19,12 +19,12 @@ if(args) {
     if(sourceClass) {
       def model = model(sourceClass)
       render template: template('scaffolding/Controller.groovy'), 
-             destination: file("grails-app/controllers/${model.packagePath}/${model.convention('Controller')}.groovy"),
+             destination: file("app/controllers/${model.packagePath}/${model.convention('Controller')}.groovy"),
              model: model,
              overwrite: overwrite
 
       render template: template('scaffolding/Service.groovy'),
-              destination: file("grails-app/services/${model.packagePath}/${model.convention('Service')}.groovy"),
+              destination: file("app/services/${model.packagePath}/${model.convention('Service')}.groovy"),
               model: model,
               overwrite: overwrite
 
