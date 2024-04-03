@@ -1,7 +1,7 @@
 import org.grails.cli.interactive.completers.DomainClassCompleter
 
 description( "Generates an asynchronous controller that performs CRUD operations" ) {
-  usage "grails generate-async-controller [DOMAIN CLASS]"
+  usage "grace generate-async-controller [DOMAIN CLASS]"
   completer DomainClassCompleter
   flag name:'force', description:"Whether to overwrite existing files"
 }
@@ -10,7 +10,7 @@ description( "Generates an asynchronous controller that performs CRUD operations
 if(args) {
   def classNames = args
   if(args[0] == '*') {
-    classNames = resources("file:grails-app/domain/**/*.groovy")
+    classNames = resources("file:app/domain/**/*.groovy")
                     .collect { className(it) }
   }
   for(arg in classNames) {
@@ -19,7 +19,7 @@ if(args) {
     if(sourceClass) {
       def model = model(sourceClass)
       render template: template('scaffolding/AsyncController.groovy'), 
-             destination: file("grails-app/controllers/${model.packagePath}/${model.convention('Controller')}.groovy"),
+             destination: file("app/controllers/${model.packagePath}/${model.convention('Controller')}.groovy"),
              model: model,
              overwrite: overwrite
 
