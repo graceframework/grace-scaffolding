@@ -116,6 +116,10 @@ subprojects { project->
             withSourcesJar()
         }
 
+        tasks.withType(GroovyCompile) {
+            options.compilerArgs << '-parameters'
+        }
+
         tasks.withType(Test) {
             useJUnitPlatform()
             testLogging {
