@@ -5,7 +5,6 @@ import org.springframework.validation.Validator
 
 import grails.gorm.validation.PersistentEntityValidator
 import grails.util.GrailsNameUtils
-import groovy.transform.CompileStatic
 
 import org.grails.datastore.mapping.config.Property
 import org.grails.datastore.mapping.model.MappingContext
@@ -120,6 +119,7 @@ class DomainPropertyImpl implements DomainProperty {
         GrailsNameUtils.getNaturalName(name)
     }
 
+    @Override
     int compareTo(DomainProperty o2) {
 
         if (domainClass.mapping.identifier?.identifierName?.contains(name)) {
@@ -132,7 +132,7 @@ class DomainPropertyImpl implements DomainProperty {
         Constrained cp2 = o2.constrained
 
         if (constrained == null && cp2 == null) {
-            return getName() <=> o2.name
+            return name <=> o2.name
         }
 
         if (constrained == null) {
