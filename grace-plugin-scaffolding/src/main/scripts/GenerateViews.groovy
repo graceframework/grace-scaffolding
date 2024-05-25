@@ -1,7 +1,7 @@
 import org.grails.cli.interactive.completers.DomainClassCompleter
 
 description( "Generates GSP views for the specified domain class" ) {
-    usage "grails generate-views [DOMAIN CLASS]|*"
+    usage "grace generate-views [DOMAIN CLASS]|*"
     argument name:'Domain Class', description:"The name of the domain class, or '*' for all", required:true
     completer DomainClassCompleter
     flag name:'force', description:"Whether to overwrite existing files"
@@ -10,7 +10,7 @@ description( "Generates GSP views for the specified domain class" ) {
 if(args) {
     def classNames = args
     if(args[0] == '*') {
-        classNames = resources("file:grails-app/domain/**/*.groovy").collect { className(it) }
+        classNames = resources("file:app/domain/**/*.groovy").collect { className(it) }
     }
     def viewNames = resources("file:src/main/templates/scaffolding/*.gsp")
                 .collect {
@@ -30,7 +30,7 @@ if(args) {
             def model = model(sourceClass)
             viewNames.each {
                 render template: template('scaffolding/'+it),
-                        destination: file("grails-app/views/${model.propertyName}/"+it),
+                        destination: file("app/views/${model.propertyName}/"+it),
                         model: model,
                         overwrite: overwrite
             }

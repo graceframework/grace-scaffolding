@@ -1,5 +1,5 @@
-rootProject.name='scaffolding'
+rootProject.name='Grace.Scaffolding'
 
-include 'grails-scaffolding-core'
-include 'grails-plugin-scaffolding'
+include 'grace-scaffolding-core'
+include 'grace-plugin-scaffolding'
 // include 'docs'
