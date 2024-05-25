@@ -35,8 +35,13 @@ public class DomainRendererRegisterer implements InitializingBean {
 
     LinkGenerator grailsLinkGenerator;
 
+    public DomainRendererRegisterer(DomainInputRendererRegistry domainInputRendererRegistry,
+            DomainOutputRendererRegistry domainOutputRendererRegistry) {
+        this(domainInputRendererRegistry, domainOutputRendererRegistry, null);
+    }
+
     public DomainRendererRegisterer(DomainInputRendererRegistry domainInputRendererRegistry, DomainOutputRendererRegistry domainOutputRendererRegistry,
-                             LinkGenerator grailsLinkGenerator) {
+            LinkGenerator grailsLinkGenerator) {
         this.domainInputRendererRegistry = domainInputRendererRegistry;
         this.domainOutputRendererRegistry = domainOutputRendererRegistry;
         this.grailsLinkGenerator = grailsLinkGenerator;
@@ -63,4 +68,9 @@ public class DomainRendererRegisterer implements InitializingBean {
 
         this.domainOutputRendererRegistry.registerDomainRenderer(new DefaultOutputRenderer(), -1);
     }
+
+    public void registerRenderers() {
+        this.afterPropertiesSet();
+    }
+
 }
