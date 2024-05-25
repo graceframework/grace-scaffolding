@@ -9,7 +9,7 @@ abstract class ClosureCaptureSpecification extends Specification {
 
     protected ClosureCapture getClosureCapture(Closure closure) {
         ClosureCapture closureCapture = new ClosureCapture()
-        closure.resolveStrategy = Closure.DELEGATE_FIRST
+        closure.resolveStrategy = Closure.OWNER_FIRST
         closure.delegate = closureCapture
         closure.call()
         closureCapture
