@@ -1,0 +1,14 @@
+
+dependencies {
+    implementation "org.graceframework:grace-core:$graceVersion"
+    implementation "org.graceframework:grace-datastore-core:$gormVersion"
+    implementation "org.graceframework:grace-datastore-gorm-validation:$gormVersion"
+    implementation "org.graceframework:grace-web-url-mappings:$graceVersion"
+    compileOnly "jakarta.annotation:jakarta.annotation-api:$jakartaAnnotationVersion"
+    
+    testImplementation "org.hibernate:hibernate-core-jakarta:$hibernateCoreVersion"
+    testImplementation "org.graceframework:grace-datastore-gorm-hibernate5:$gormVersion"
+    testImplementation "org.spockframework:spock-core:$spockVersion"
+    testImplementation 'net.bytebuddy:byte-buddy:1.14.4'
+    testImplementation 'org.objenesis:objenesis:3.3'
+}
