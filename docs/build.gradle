@@ -1,8 +1,24 @@
 plugins {
-    id 'org.asciidoctor.convert' version '1.5.3'
+    id 'org.asciidoctor.jvm.convert'
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    documentation
+}
+
+dependencies {
+    documentation "org.codehaus.groovy:groovy:$groovyVersion"
+    documentation "org.codehaus.groovy:groovy-ant:$groovyVersion"
+    documentation "org.codehaus.groovy:groovy-templates:$groovyVersion"
+    documentation "com.github.javaparser:javaparser-core:$javaParserCoreVersion"
 }
 
 asciidoctor {
+    baseDirFollowsSourceDir()
     resources {
         from('src/docs/images')
         into "./images"
@@ -13,20 +29,12 @@ asciidoctor {
                'toc'           : 'left',
                'icons'         : 'font',
                'version'       : project.version,
-               'sourcedir'     : "${rootProject.allprojects.find { it.name == 'grails-scaffolding-core'}.projectDir}/src/main/groovy"
-}
-
-configurations {
-  documentation
-}
-
-dependencies {
-    documentation "org.codehaus.groovy:groovy-all:2.4.6"
+               'sourcedir'     : "${rootProject.allprojects.find { it.name == 'grace-scaffolding-core'}.projectDir}/src/main/groovy"
 }
 
 task apidocs(type: Groovydoc) {
     def allProjects = rootProject.allprojects.findAll { project ->
-      ['grails-scaffolding-core'].contains(project.name)
+      ['grace-scaffolding-core'].contains(project.name)
     }
     source allProjects.collect { project ->
       project.files('src/main/groovy')
@@ -34,8 +42,12 @@ task apidocs(type: Groovydoc) {
 
     destinationDir = new File(buildDir, 'docs/api')
     // Might need a classpath
-    docTitle = "Grails Scaffolding ${version}"
-    
+    docTitle = "Grace Scaffolding ${version}"
+
+    access = GroovydocAccess.PROTECTED
+    includeAuthor = true
+    includeMainForScripts = true
+    processScripts = true
     classpath = configurations.documentation
     groovyClasspath = configurations.documentation
 }

@@ -2,4 +2,4 @@ rootProject.name='Grace.Scaffolding'
 
 include 'grace-scaffolding-core'
 include 'grace-plugin-scaffolding'
-// include 'docs'
+include 'docs'
