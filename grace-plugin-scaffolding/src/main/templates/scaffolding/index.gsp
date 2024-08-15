@@ -35,7 +35,7 @@
 
                     <g:if test="\${${propertyName}Count > params.int('max')}">
                     <nav aria-label="Page navigation">
-                        <bs:paginate total="\${${propertyName}Count ?: 0}" useIcons="true" align="center" />
+                        <g:paginate total="\${${propertyName}Count ?: 0}" />
                     </nav>
                     </g:if>
                 </div>
