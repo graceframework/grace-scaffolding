@@ -34,9 +34,9 @@
                     <f:table collection="\${${propertyName}List}" />
 
                     <g:if test="\${${propertyName}Count > params.int('max')}">
-                    <nav aria-label="Page navigation">
+                    <div class="pagination justify-content-center">
                         <g:paginate total="\${${propertyName}Count ?: 0}" />
-                    </nav>
+                    </div>
                     </g:if>
                 </div>
             </section>
