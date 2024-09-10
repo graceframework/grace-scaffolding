@@ -9,7 +9,42 @@
 
 # Grace Scaffolding
 
-The Grace framework Scaffolding plugin replicates much of the functionality from Grace 2023, but uses the [fields](https://github.com/graceframework/grace-fields) plugin instead.
+Grace Scaffolding and [Fields](https://github.com/graceframework/grace-fields) plugin work together will make you more productive.
+
+Grace Scaffolding lets you generate some basic CRUD interfaces for a domain class, including:
+
+* GSP views
+
+* Controller actions for create/read/update/delete (CRUD) operations
+
+you can set the `scaffold` property in the Controller to a specific domain class to use Dynamic scaffolding:
+
+```groovy
+class BookController {
+    static scaffold = Book
+}
+```
+
+Grace CLI provides some useful commands to do this job quickly,
+
+```bash
+$ grace generate-all Book
+$ grace generate-async-controller Book
+$ grace generate-controller Book
+$ grace generate-views Book
+$ grace create-scaffold-controller Book
+```
+
+## Versions
+
+To make it easier for users to use and upgrade, Plugin adopts a version policy consistent with the [Grace Framework](https://github.com/graceframework/grace-framework).
+
+| Plugin Version | Grace Version |
+|----------------|---------------|
+| 6.0.x          | 2023.0.x      |
+| 5.2.x          | 2022.2.x      |
+| 5.1.x          | 2022.1.x      |
+| 5.0.x          | 2022.0.x      |
 
 ## License
 
@@ -19,4 +54,3 @@ This plugin is available as open source under the terms of the [APACHE LICENSE, 
 
 - [Grace Framework](https://github.com/graceframework/grace-framework)
 - [Grace Plugins](https://github.com/grace-plugins)
-- [Grace Fields Plugin](https://github.com/graceframework/grace-fields)
