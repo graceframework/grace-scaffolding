@@ -2,6 +2,7 @@ package org.grails.scaffolding;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +25,7 @@ import org.grails.scaffolding.registry.DomainOutputRendererRegistry;
 import org.grails.scaffolding.registry.DomainRendererRegisterer;
 
 @AutoConfiguration
+@AutoConfigureOrder
 public class ScaffoldingBeanConfiguration {
 
     @Bean
