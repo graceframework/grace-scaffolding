@@ -10,5 +10,5 @@ dependencies {
     testImplementation "org.graceframework:grace-datastore-gorm-hibernate:$gormVersion"
     testImplementation "org.spockframework:spock-core:$spockVersion"
     testImplementation "net.bytebuddy:byte-buddy:$byteBuddyVersion"
-    testImplementation 'org.objenesis:objenesis:3.3'
+    testImplementation "org.objenesis:objenesis:$objenesisVersion"
 }
