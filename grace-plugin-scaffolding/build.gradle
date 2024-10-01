@@ -7,12 +7,4 @@ dependencies {
     api "org.graceframework:grace-web-boot:$graceVersion"
     api "org.graceframework:grace-web-gsp:$graceVersion"
     compileOnly "jakarta.servlet:jakarta.servlet-api:$servletApiVersion"
-
-    // testImplementation "org.graceframework:grace-plugin-testing:$graceVersion"
-}
-
-jar {
-    enabled = true
-    archiveClassifier.set('plugin')
-    includeEmptyDirs = false
 }
