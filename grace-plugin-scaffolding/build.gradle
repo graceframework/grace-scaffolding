@@ -4,7 +4,6 @@ dependencies {
         exclude group: 'org.graceframework', module: 'grace-datastore-core'
     }
     api "org.graceframework:grace-plugin-rest:$graceVersion"
-    api "org.graceframework:grace-web-boot:$graceVersion"
     api "org.graceframework:grace-web-gsp:$graceVersion"
     compileOnly "jakarta.servlet:jakarta.servlet-api:$servletApiVersion"
 }
