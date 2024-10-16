@@ -1,6 +1,5 @@
 package org.grails.scaffolding.model.property
 
-import org.grails.orm.hibernate.cfg.HibernateMappingContext
 import org.grails.scaffolding.model.MocksDomain
 import org.grails.datastore.mapping.keyvalue.mapping.config.KeyValueMappingContext
 import org.grails.datastore.mapping.model.MappingContext
@@ -171,7 +170,7 @@ class DomainPropertySpec extends Specification implements MocksDomain {
 
     void "test sort w/ Hibernate embedded"() {
         given:
-        List<DomainProperty> properties = new HibernateMappingContext().createEmbeddedEntity(EmbeddedClassEntity).persistentProperties.collect {
+        List<DomainProperty> properties = new KeyValueMappingContext("test").createEmbeddedEntity(EmbeddedClassEntity).persistentProperties.collect {
             new DomainPropertyImpl(it, mappingContext)
         }
         properties.sort()

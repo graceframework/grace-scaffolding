@@ -7,7 +7,6 @@ dependencies {
     compileOnly "jakarta.annotation:jakarta.annotation-api:$jakartaAnnotationVersion"
     
     testImplementation "org.hibernate:hibernate-core-jakarta:$hibernateCoreVersion"
-    testImplementation "org.graceframework:grace-datastore-gorm-hibernate:$gormVersion"
     testImplementation "org.spockframework:spock-core:$spockVersion"
     testImplementation "net.bytebuddy:byte-buddy:$byteBuddyVersion"
     testImplementation "org.objenesis:objenesis:$objenesisVersion"
