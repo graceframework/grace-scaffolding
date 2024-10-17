@@ -5,8 +5,7 @@ dependencies {
     implementation "org.graceframework:grace-datastore-gorm-validation:$gormVersion"
     implementation "org.graceframework:grace-web-url-mappings:$graceVersion"
     compileOnly "jakarta.annotation:jakarta.annotation-api:$jakartaAnnotationVersion"
-    
-    testImplementation "org.hibernate:hibernate-core-jakarta:$hibernateCoreVersion"
+
     testImplementation "org.spockframework:spock-core:$spockVersion"
     testImplementation "net.bytebuddy:byte-buddy:$byteBuddyVersion"
     testImplementation "org.objenesis:objenesis:$objenesisVersion"
